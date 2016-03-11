@@ -1,4 +1,4 @@
-class Ripple {
+class Ripple implements canUpdate, canDisplay {
   private int max_age;
   private int age;
   private boolean finished;
@@ -8,7 +8,7 @@ class Ripple {
   Ripple(float x, float y) {
     position_x = x;
     position_y = y;
-    max_age = 60;
+    max_age = 120;
     age = 1;
     finished = false;
   }
@@ -18,9 +18,7 @@ class Ripple {
   }
   
   void update() {
-    if (finished != true) {
-      age += 1;
-    }
+    age += 1;
     if (age >= max_age) {
       finished = true;
     }

@@ -1,6 +1,5 @@
 Vst vst;
-Ripple r;
-Raindrop rd;
+Scene theScene;
 
 void settings() {
   size(800, 600, P2D);
@@ -8,26 +7,14 @@ void settings() {
 }
 
 void setup() {
-  frameRate(30);
+  frameRate(50);
   vst = new Vst(this, createSerial());
-  
-  r = new Ripple(400, 500);
-  rd = new Raindrop(400, 0, 0);
+  theScene = new Scene();
 }
 
 void draw() {
   background(0);
-  
-  
-  rd.update();
-  if (!rd.finished()) {
-    rd.display();
-  }
-  if (rd.finished()) {
-    r.update();
-    if (!r.finished()) {
-      r.display();
-    }
-  }
+  theScene.update();
+  theScene.display();
   vst.display();
 }

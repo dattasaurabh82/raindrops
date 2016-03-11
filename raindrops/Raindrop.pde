@@ -1,14 +1,19 @@
-class Raindrop {
+class Raindrop implements canUpdate, canDisplay {
   private float position_x;
   private float position_y;
-  private float position_z;
-  private int age;
   private boolean finished;
   
-  Raindrop(float x, float y, float z) {
+  Raindrop(float x, float y) {
     position_x = x;
     position_y = y;
-    position_z = z;
+  }
+  
+  float getPositionX() {
+    return position_x;
+  }
+  
+  float getPositionY() {
+    return position_y;
   }
   
   boolean finished() {
@@ -16,13 +21,7 @@ class Raindrop {
   }
   
   void update() {
-    if (finished != true) {
-      age += 1;
-      position_y += 10;
-    }
-    if (position_y >= 500) {
-      finished = true;
-    }
+    position_y += 15;
   }
   
   void display() {
