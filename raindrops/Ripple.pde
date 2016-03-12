@@ -4,11 +4,17 @@ class Ripple implements canUpdate, canDisplay {
   private boolean finished;
   private float position_x;
   private float position_y;
+  private int max_brightness;
+  private int max_width;
+  private float aspect_ratio;
   
-  Ripple(float x, float y) {
-    position_x = x;
-    position_y = y;
-    max_age = 120;
+  Ripple(float my_x, float my_y, int my_max_age, int my_max_brightness, int my_max_width, float my_aspect_ratio) {
+    position_x = my_x;
+    position_y = my_y;
+    max_age = my_max_age;
+    max_brightness = my_max_brightness;
+    max_width = my_max_width;
+    aspect_ratio = my_aspect_ratio;
     age = 1;
     finished = false;
   }
@@ -25,10 +31,9 @@ class Ripple implements canUpdate, canDisplay {
   }
   
   void display() {
-    float perspective = 0.2;
-    float ripple_speed = ((float)age / max_age) * 1000;
-    int brightness = (int)((1.0 - (float)age / max_age) * 120);
+    float width_to_draw = ((float)age / max_age) * max_width;
+    int brightness = (int)((1.0 - (float)age / max_age) * max_brightness);
     stroke(brightness);
-    ellipse(position_x, position_y, ripple_speed, ripple_speed * perspective, 200);
+    ellipse(position_x, position_y, width_to_draw, width_to_draw * aspect_ratio, 20);
   }
 }

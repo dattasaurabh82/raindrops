@@ -11,6 +11,10 @@ class Scene {
   private int pond_height;
 
   private ArrayList<Ripple> ripples;
+  private int ripples_max_age;
+  private int ripples_max_brightness;
+  private int ripples_max_width;
+  private float ripples_aspect_ratio;
   
   Scene() {
     raindrops = new ArrayList<Raindrop>();
@@ -26,6 +30,10 @@ class Scene {
     new_raindrop_min_time = xml.getChild("raindropTimes").getInt("min");
     new_raindrop_max_time = xml.getChild("raindropTimes").getInt("max");
     pond_height = xml.getChild("pond").getInt("height");
+    ripples_max_age = xml.getChild("ripples").getInt("maxage");
+    ripples_max_brightness = xml.getChild("ripples").getInt("maxbrightness");
+    ripples_max_width = xml.getChild("ripples").getInt("maxwidth");
+    ripples_aspect_ratio = xml.getChild("ripples").getFloat("aspectratio");
   }
   
   void update() {
@@ -56,7 +64,7 @@ class Scene {
   }
   
   void addRippleAtPosition(float x, float y) {
-    Ripple ripple_to_add = new Ripple(x, y);
+    Ripple ripple_to_add = new Ripple(x, y, ripples_max_age, ripples_max_brightness, ripples_max_width, ripples_aspect_ratio);
     ripples.add(ripple_to_add);
   }
   
