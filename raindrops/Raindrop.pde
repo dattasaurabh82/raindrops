@@ -1,7 +1,6 @@
 class Raindrop implements canUpdate, canDisplay {
   private float position_x;
   private float position_y;
-  private boolean finished;
   
   Raindrop(float x, float y) {
     position_x = x;
@@ -15,11 +14,7 @@ class Raindrop implements canUpdate, canDisplay {
   float getPositionY() {
     return position_y;
   }
-  
-  boolean finished() {
-    return finished;
-  }
-  
+
   void update() {
     position_y += 15;
   }
