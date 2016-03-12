@@ -21,6 +21,6 @@ class Raindrop implements canUpdate, canDisplay {
   
   void display() {
     stroke(255);
-    line(position_x, position_y, position_x, position_y + 10); 
+    line(position_x, position_y, position_x, position_y - 10); 
   }
 }
