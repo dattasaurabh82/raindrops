@@ -5,16 +5,23 @@ class Scene {
   private ArrayList<Ripple> ripples;
   private int time_since_last_raindrop;
   private int time_until_next_raindrop;
+  private int pond_height;
   private int new_raindrop_min_time;
   private int new_raindrop_max_time;
   
   Scene() {
     raindrops = new ArrayList<Raindrop>();
     ripples = new ArrayList<Ripple>();
-    new_raindrop_min_time = 1;
-    new_raindrop_max_time = 60;
     time_since_last_raindrop = 0;
     time_until_next_raindrop = 0;
+    loadConfig("raindrops-config.xml");
+  }
+  
+  void loadConfig(String filename) {
+    XML xml = loadXML(filename);
+    new_raindrop_min_time = xml.getChild("raindropTimes").getInt("min");
+    new_raindrop_max_time = xml.getChild("raindropTimes").getInt("max");
+    pond_height = xml.getChild("pond").getInt("height");
   }
   
   void update() {
@@ -52,7 +59,7 @@ class Scene {
   void doInteractions() {
     for (int x = 0; x < raindrops.size(); x++) {
       Raindrop a_raindrop = raindrops.get(x);
-      if (a_raindrop.getPositionY() >= 500) {
+      if (a_raindrop.getPositionY() >= pond_height) {
         addRippleAtPosition(a_raindrop.getPositionX(), a_raindrop.getPositionY());
         raindrops.remove(x);
       }
