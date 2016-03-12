@@ -1,5 +1,5 @@
 interface canUpdate {
-  void update();
+  void update(int timestep);
 }
 
 interface canDisplay {

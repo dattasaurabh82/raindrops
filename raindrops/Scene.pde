@@ -1,13 +1,16 @@
 import java.util.Random;
 
 class Scene {
+  private int timestep;
+
   private ArrayList<Raindrop> raindrops;
-  private ArrayList<Ripple> ripples;
   private int time_since_last_raindrop;
   private int time_until_next_raindrop;
-  private int pond_height;
   private int new_raindrop_min_time;
   private int new_raindrop_max_time;
+  private int pond_height;
+
+  private ArrayList<Ripple> ripples;
   
   Scene() {
     raindrops = new ArrayList<Raindrop>();
@@ -19,6 +22,7 @@ class Scene {
   
   void loadConfig(String filename) {
     XML xml = loadXML(filename);
+    timestep = xml.getChild("scene").getInt("timestep");
     new_raindrop_min_time = xml.getChild("raindropTimes").getInt("min");
     new_raindrop_max_time = xml.getChild("raindropTimes").getInt("max");
     pond_height = xml.getChild("pond").getInt("height");
@@ -28,7 +32,7 @@ class Scene {
     doInteractions();
     updateList(raindrops);
     updateList(ripples);
-    time_since_last_raindrop += 1;
+    time_since_last_raindrop += timestep;
     if (needNewRaindrop()) {
       addRaindrop();
     }
@@ -74,7 +78,7 @@ class Scene {
   
   void updateList(ArrayList<? extends canUpdate> theList) {
     for (int x = 0; x < theList.size(); x++) {
-      theList.get(x).update();
+      theList.get(x).update(timestep);
     }
   }
   

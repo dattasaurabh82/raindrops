@@ -17,8 +17,8 @@ class Ripple implements canUpdate, canDisplay {
     return finished;
   }
   
-  void update() {
-    age += 1;
+  void update(int timestep) {
+    age += timestep;
     if (age >= max_age) {
       finished = true;
     }

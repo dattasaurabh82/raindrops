@@ -15,8 +15,8 @@ class Raindrop implements canUpdate, canDisplay {
     return position_y;
   }
 
-  void update() {
-    position_y += 15;
+  void update(int timestep) {
+    position_y += 15 * timestep;
   }
   
   void display() {
