@@ -2,12 +2,17 @@ import java.util.Random;
 
 class Scene {
   private int timestep;
+  private int scene_width;
+  private int scene_height;
 
   private ArrayList<Raindrop> raindrops;
   private int time_since_last_raindrop;
   private int time_until_next_raindrop;
+  
   private int new_raindrop_min_time;
   private int new_raindrop_max_time;
+  private float new_raindrop_velocity_v;
+  
   private int pond_height;
 
   private ArrayList<Ripple> ripples;
@@ -15,6 +20,7 @@ class Scene {
   private int ripples_max_brightness;
   private int ripples_max_width;
   private float ripples_aspect_ratio;
+  private int ripples_smoothness;
   
   Scene() {
     raindrops = new ArrayList<Raindrop>();
@@ -27,13 +33,25 @@ class Scene {
   void loadConfig(String filename) {
     XML xml = loadXML(filename);
     timestep = xml.getChild("scene").getInt("timestep");
+    scene_width = xml.getChild("scene").getInt("width");
+    scene_height = xml.getChild("scene").getInt("height");
+    timestep = xml.getChild("scene").getInt("timestep");
     new_raindrop_min_time = xml.getChild("raindropTimes").getInt("min");
     new_raindrop_max_time = xml.getChild("raindropTimes").getInt("max");
-    pond_height = xml.getChild("pond").getInt("height");
+    new_raindrop_velocity_v = xml.getChild("raindrops").getFloat("speed");
+    pond_height = (int)(xml.getChild("pond").getFloat("height") * scene_height);
     ripples_max_age = xml.getChild("ripples").getInt("maxage");
     ripples_max_brightness = xml.getChild("ripples").getInt("maxbrightness");
     ripples_max_width = xml.getChild("ripples").getInt("maxwidth");
     ripples_aspect_ratio = xml.getChild("ripples").getFloat("aspectratio");
+    ripples_smoothness = xml.getChild("ripples").getInt("smoothness");
+  }
+  
+  int scene_width() {
+    return scene_width;
+  }
+  int scene_height() {
+    return scene_height;
   }
   
   void update() {
@@ -57,14 +75,17 @@ class Scene {
   
   void addRaindrop() {
     time_since_last_raindrop = 0;
-    time_until_next_raindrop = new_raindrop_min_time + (int)(Math.random() * (new_raindrop_max_time - new_raindrop_min_time));
-    int new_x_pos = (int)(Math.random() * 800);
-    Raindrop raindrop_to_add = new Raindrop(new_x_pos, 0);
+    time_until_next_raindrop = new_raindrop_min_time + (int)(Math.random()
+      * (new_raindrop_max_time - new_raindrop_min_time));
+    int new_x_pos = (int)(Math.random() * scene_width);
+    Raindrop raindrop_to_add = new Raindrop(new_x_pos, 0, new_raindrop_velocity_v);
     raindrops.add(raindrop_to_add);
   }
   
   void addRippleAtPosition(float x, float y) {
-    Ripple ripple_to_add = new Ripple(x, y, ripples_max_age, ripples_max_brightness, ripples_max_width, ripples_aspect_ratio);
+    Ripple ripple_to_add = new Ripple(x, y, ripples_max_age,
+      ripples_max_brightness, ripples_max_width, ripples_aspect_ratio,
+      ripples_smoothness);
     ripples.add(ripple_to_add);
   }
   

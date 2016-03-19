@@ -2,14 +2,14 @@ Vst vst;
 Scene theScene;
 
 void settings() {
-  size(800, 600, P2D);
+  vst = new Vst(this, createSerial());
+  theScene = new Scene();
+  size(theScene.scene_width(), theScene.scene_height(), P2D);
   pixelDensity(displayDensity());
 }
 
 void setup() {
-  frameRate(50);
-  vst = new Vst(this, createSerial());
-  theScene = new Scene();
+  frameRate(30);
 }
 
 void draw() {
