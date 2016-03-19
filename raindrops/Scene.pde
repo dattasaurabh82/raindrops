@@ -35,7 +35,6 @@ class Scene {
     timestep = xml.getChild("scene").getInt("timestep");
     scene_width = xml.getChild("scene").getInt("width");
     scene_height = xml.getChild("scene").getInt("height");
-    timestep = xml.getChild("scene").getInt("timestep");
     new_raindrop_min_time = xml.getChild("raindropTimes").getInt("min");
     new_raindrop_max_time = xml.getChild("raindropTimes").getInt("max");
     new_raindrop_velocity_v = xml.getChild("raindrops").getFloat("speed");
