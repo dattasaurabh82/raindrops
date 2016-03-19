@@ -55,7 +55,8 @@ class Scene {
   }
   
   void update() {
-    doInteractions();
+    createNewRipples();
+    removeOldRipples();
     updateList(raindrops);
     updateList(ripples);
     time_since_last_raindrop += timestep;
@@ -89,7 +90,7 @@ class Scene {
     ripples.add(ripple_to_add);
   }
   
-  void doInteractions() {
+  void createNewRipples() {
     for (int x = 0; x < raindrops.size(); x++) {
       Raindrop a_raindrop = raindrops.get(x);
       if (a_raindrop.getPositionY() >= pond_height) {
@@ -97,6 +98,9 @@ class Scene {
         raindrops.remove(x);
       }
     }
+  }
+  
+  void removeOldRipples() {
     for (int x = 0; x < ripples.size(); x++) {
       Ripple a_ripple = ripples.get(x);
       if (a_ripple.finished()) {
